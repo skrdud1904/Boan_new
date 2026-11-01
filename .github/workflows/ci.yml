@@ -1,0 +1,32 @@
+name: Rust checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: cargo fmt --all -- --check
+      - run: cargo clippy --locked --all-targets -- -D warnings
+      - run: cargo test --locked --all-targets
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config --quiet
+      - run: docker build --tag boannews-incident-brief:ci .
+      - name: Verify non-root image starts without network or a writable root filesystem
+        run: >-
+          docker run --rm --network none --read-only
+          --cap-drop ALL --security-opt no-new-privileges:true
+          --tmpfs /app/data:uid=10001,gid=10001,mode=0700
+          boannews-incident-brief:ci delivery-status

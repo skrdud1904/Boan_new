@@ -1,0 +1,38 @@
+services:
+  news:
+    build:
+      context: .
+      args:
+        BUILD_JOBS: "2"
+    image: boannews-incident-brief:local
+    command: ["run", "--send", "--interval-minutes", "60", "--digest-hour", "18"]
+    environment:
+      DISCORD_WEBHOOK_URL_FILE: /run/secrets/discord_webhook_url
+    secrets:
+      - discord_webhook_url
+    volumes:
+      - news-data:/app/data
+    restart: unless-stopped
+    init: true
+    # Collection uses bounded blocking HTTP requests/retries. Allow them to finish.
+    stop_grace_period: 6m
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # No inbound ports: only outbound DNS and HTTPS are needed.
+
+volumes:
+  news-data:
+
+secrets:
+  discord_webhook_url:
+    file: ./.secrets/discord_webhook_url

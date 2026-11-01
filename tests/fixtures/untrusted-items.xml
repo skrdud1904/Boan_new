@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic invalid input and duplicate-link cases. -->
+<rss version="2.0">
+  <channel>
+    <title>Untrusted input test</title>
+    <link>https://www.boannews.com/</link>
+    <description>Synthetic fixture</description>
+    <item><title>가상 침해사고</title><link>http://boannews.com/media/view.asp?idx=00123</link><description>가상 설명</description><pubDate>2026-11-01 14:00:00</pubDate></item>
+    <item><title>중복 기사</title><link>https://www.boannews.com/news/articleView.html?idxno=123</link><pubDate>2026-11-01 14:00:00</pubDate></item>
+    <item><title>외부 주소</title><link>https://attacker.example/news/articleView.html?idxno=124</link><pubDate>2026-11-01 14:00:00</pubDate></item>
+    <item><title>자격 증명</title><link>https://user@www.boannews.com/news/articleView.html?idxno=125</link><pubDate>2026-11-01 14:00:00</pubDate></item>
+    <item><title>잘못된 날짜</title><link>https://www.boannews.com/news/articleView.html?idxno=126</link><pubDate>2026-02-30 14:00:00</pubDate></item>
+    <item><title>날짜 없음</title><link>https://www.boannews.com/news/articleView.html?idxno=127</link></item>
+    <item><title>숫자 아닌 식별자</title><link>https://www.boannews.com/news/articleView.html?idxno=NaN</link><pubDate>2026-11-01 14:00:00</pubDate></item>
+    <item><title>관리자 경로</title><link>https://www.boannews.com/admin/?idxno=128</link><pubDate>2026-11-01 14:00:00</pubDate></item>
+    <item><title>   </title><link>https://www.boannews.com/news/articleView.html?idxno=129</link><pubDate>2026-11-01 14:00:00</pubDate></item>
+    <item><title>링크 없음</title><pubDate>2026-11-01 14:00:00</pubDate></item>
+  </channel>
+</rss>

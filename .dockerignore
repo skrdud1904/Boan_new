@@ -1,0 +1,7 @@
+# Allow only build inputs. Never send local data or credentials to the builder.
+**
+!Dockerfile
+!Cargo.toml
+!Cargo.lock
+!src/
+!src/**

@@ -1,0 +1,30 @@
+[package]
+name = "boannews-incident-brief"
+version = "0.1.0"
+edition = "2024"
+description = "Boannews RSS intrusion incident collector and daily Discord briefing"
+license = "MIT"
+publish = false
+
+[dependencies]
+anyhow = "1"
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4", features = ["derive"] }
+ctrlc = { version = "3", features = ["termination"] }
+fs2 = "0.4"
+quick-xml = "0.41"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "native-tls"] }
+robotstxt = "0.3"
+rss = "2"
+rusqlite = { version = "0.32", features = ["bundled"] }
+scraper = "0.22"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+url = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+lto = "thin"
+strip = true
